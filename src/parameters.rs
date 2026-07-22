@@ -75,23 +75,91 @@ pub struct FieldSpec {
 
 /// Authoritative CSV schema after the timestamp field.
 pub const FIELDS: [FieldSpec; FIELD_COUNT] = [
-    FieldSpec { header: "Vtrack", label: "Vtrack", colour: Color32::from_rgb(180, 140, 255) },
-    FieldSpec { header: "VccEst", label: "Vcc estimate", colour: Color32::from_rgb(255, 190, 70) },
-    FieldSpec { header: "BmpC", label: "BMP180 reference", colour: Color32::from_rgb(255, 255, 255) },
-    FieldSpec { header: "BmpPa", label: "BMP180 station", colour: Color32::from_rgb(80, 190, 255) },
-    FieldSpec { header: "BmpMslpPa", label: "BMP180 MSLP", colour: Color32::from_rgb(80, 255, 190) },
-    FieldSpec { header: "V0", label: "ADS A0", colour: Color32::from_rgb(255, 90, 90) },
-    FieldSpec { header: "R0", label: "NTC A0", colour: Color32::from_rgb(255, 90, 90) },
-    FieldSpec { header: "T0", label: "A0 β", colour: Color32::from_rgb(255, 90, 90) },
-    FieldSpec { header: "T0sh", label: "A0 SH", colour: Color32::from_rgb(255, 150, 150) },
-    FieldSpec { header: "V1", label: "ADS A1", colour: Color32::from_rgb(100, 220, 120) },
-    FieldSpec { header: "R1", label: "NTC A1", colour: Color32::from_rgb(100, 220, 120) },
-    FieldSpec { header: "T1", label: "A1 β", colour: Color32::from_rgb(100, 220, 120) },
-    FieldSpec { header: "T1sh", label: "A1 SH", colour: Color32::from_rgb(160, 255, 175) },
-    FieldSpec { header: "V2", label: "ADS A2", colour: Color32::from_rgb(90, 150, 255) },
-    FieldSpec { header: "R2", label: "NTC A2", colour: Color32::from_rgb(90, 150, 255) },
-    FieldSpec { header: "T2", label: "A2 β", colour: Color32::from_rgb(90, 150, 255) },
-    FieldSpec { header: "T2sh", label: "A2 SH", colour: Color32::from_rgb(150, 190, 255) },
+    FieldSpec {
+        header: "Vtrack",
+        label: "Vtrack",
+        colour: Color32::from_rgb(180, 140, 255),
+    },
+    FieldSpec {
+        header: "VccEst",
+        label: "Vcc estimate",
+        colour: Color32::from_rgb(255, 190, 70),
+    },
+    FieldSpec {
+        header: "BmpC",
+        label: "BMP180 reference",
+        colour: Color32::from_rgb(255, 255, 255),
+    },
+    FieldSpec {
+        header: "BmpPa",
+        label: "BMP180 station",
+        colour: Color32::from_rgb(80, 190, 255),
+    },
+    FieldSpec {
+        header: "BmpMslpPa",
+        label: "BMP180 MSLP",
+        colour: Color32::from_rgb(80, 255, 190),
+    },
+    FieldSpec {
+        header: "V0",
+        label: "ADS A0",
+        colour: Color32::from_rgb(255, 90, 90),
+    },
+    FieldSpec {
+        header: "R0",
+        label: "NTC A0",
+        colour: Color32::from_rgb(255, 90, 90),
+    },
+    FieldSpec {
+        header: "T0",
+        label: "A0 β",
+        colour: Color32::from_rgb(255, 90, 90),
+    },
+    FieldSpec {
+        header: "T0sh",
+        label: "A0 SH",
+        colour: Color32::from_rgb(255, 150, 150),
+    },
+    FieldSpec {
+        header: "V1",
+        label: "ADS A1",
+        colour: Color32::from_rgb(100, 220, 120),
+    },
+    FieldSpec {
+        header: "R1",
+        label: "NTC A1",
+        colour: Color32::from_rgb(100, 220, 120),
+    },
+    FieldSpec {
+        header: "T1",
+        label: "A1 β",
+        colour: Color32::from_rgb(100, 220, 120),
+    },
+    FieldSpec {
+        header: "T1sh",
+        label: "A1 SH",
+        colour: Color32::from_rgb(160, 255, 175),
+    },
+    FieldSpec {
+        header: "V2",
+        label: "ADS A2",
+        colour: Color32::from_rgb(90, 150, 255),
+    },
+    FieldSpec {
+        header: "R2",
+        label: "NTC A2",
+        colour: Color32::from_rgb(90, 150, 255),
+    },
+    FieldSpec {
+        header: "T2",
+        label: "A2 β",
+        colour: Color32::from_rgb(90, 150, 255),
+    },
+    FieldSpec {
+        header: "T2sh",
+        label: "A2 SH",
+        colour: Color32::from_rgb(150, 190, 255),
+    },
 ];
 
 /// Exact first CSV header.
