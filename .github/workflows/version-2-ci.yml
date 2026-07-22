@@ -1,0 +1,48 @@
+name: Version 2 CI
+
+on:
+  push:
+    branches:
+      - version-2
+  pull_request:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    name: Format, test, and lint
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v6
+
+      - name: Install current stable Rust toolchain
+        run: |
+          rustup update stable
+          rustup default stable
+          rustup component add rustfmt clippy
+
+      - name: Resolve application dependency lockfile
+        run: cargo generate-lockfile
+
+      - name: Check formatting
+        run: cargo fmt --all -- --check
+
+      - name: Run tests
+        run: cargo test --all-targets
+
+      - name: Run Clippy
+        run: cargo clippy --all-targets --all-features -- -D warnings
+
+      - name: Preserve generated Cargo.lock
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: version-2-cargo-lock
+          path: Cargo.lock
+          if-no-files-found: error
+          retention-days: 7
