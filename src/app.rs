@@ -318,9 +318,7 @@ impl SensorApp {
         let mut fields = vec![field::BMP_C];
         match self.ntc_model {
             NtcModel::Beta => fields.extend([field::T0_BETA, field::T1_BETA, field::T2_BETA]),
-            NtcModel::SteinhartHart => {
-                fields.extend([field::T0_SH, field::T1_SH, field::T2_SH])
-            }
+            NtcModel::SteinhartHart => fields.extend([field::T0_SH, field::T1_SH, field::T2_SH]),
             NtcModel::Both => fields.extend([
                 field::T0_BETA,
                 field::T0_SH,
