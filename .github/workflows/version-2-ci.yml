@@ -9,18 +9,16 @@ on:
       - main
 
 permissions:
-  contents: write
+  contents: read
 
 jobs:
   check:
-    name: Resolve lockfile, test, and lint
+    name: Format, test, and lint
     runs-on: ubuntu-latest
 
     steps:
-      - name: Check out Version 2 branch
+      - name: Check out repository
         uses: actions/checkout@v6
-        with:
-          ref: version-2
 
       - name: Install current stable Rust toolchain
         run: |
@@ -28,26 +26,11 @@ jobs:
           rustup default stable
           rustup component add rustfmt clippy
 
-      - name: Resolve application dependency lockfile
-        run: cargo generate-lockfile
-
       - name: Check formatting
         run: cargo fmt --all -- --check
 
-      - name: Run tests
+      - name: Run tests with committed dependency graph
         run: cargo test --all-targets --locked
 
-      - name: Run Clippy
+      - name: Run Clippy with warnings denied
         run: cargo clippy --all-targets --all-features --locked -- -D warnings
-
-      - name: Commit resolved Cargo.lock
-        run: |
-          if [[ -n "$(git status --porcelain -- Cargo.lock)" ]]; then
-            git config user.name "github-actions[bot]"
-            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-            git add Cargo.lock
-            git commit -m "Version 2: commit resolved application lockfile"
-            git push origin HEAD:version-2
-          else
-            echo "Cargo.lock is already current."
-          fi
