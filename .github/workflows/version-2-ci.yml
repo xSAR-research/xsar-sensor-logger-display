@@ -4,21 +4,20 @@ on:
   push:
     branches:
       - version-2
-  pull_request:
-    branches:
-      - main
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   check:
-    name: Format, test, and lint
+    name: Resolve lockfile, test, and lint
     runs-on: ubuntu-latest
 
     steps:
-      - name: Check out repository
+      - name: Check out Version 2 branch
         uses: actions/checkout@v6
+        with:
+          ref: version-2
 
       - name: Install current stable Rust toolchain
         run: |
@@ -29,23 +28,23 @@ jobs:
       - name: Resolve application dependency lockfile
         run: cargo generate-lockfile
 
-      - name: Format source for capture
-        run: cargo fmt --all
+      - name: Check formatting
+        run: cargo fmt --all -- --check
 
       - name: Run tests
-        run: cargo test --all-targets
+        run: cargo test --all-targets --locked
 
       - name: Run Clippy
-        run: cargo clippy --all-targets --all-features -- -D warnings
+        run: cargo clippy --all-targets --all-features --locked -- -D warnings
 
-      - name: Preserve formatted source and Cargo.lock
-        if: always()
-        uses: actions/upload-artifact@v7
-        with:
-          name: version-2-formatted-source
-          path: |
-            Cargo.lock
-            Cargo.toml
-            src
-          if-no-files-found: error
-          retention-days: 7
+      - name: Commit resolved Cargo.lock
+        run: |
+          if [[ -n "$(git status --porcelain -- Cargo.lock)" ]]; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add Cargo.lock
+            git commit -m "Version 2: commit resolved application lockfile"
+            git push origin HEAD:version-2
+          else
+            echo "Cargo.lock is already current."
+          fi
