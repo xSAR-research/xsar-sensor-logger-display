@@ -104,8 +104,8 @@ pub struct LoadReport {
 }
 
 pub fn load_csv(path: &Path) -> Result<LoadReport> {
-    let file = File::open(path)
-        .with_context(|| format!("could not open CSV {}", path.display()))?;
+    let file =
+        File::open(path).with_context(|| format!("could not open CSV {}", path.display()))?;
     parse_reader(file, path.to_path_buf())
 }
 
@@ -230,10 +230,12 @@ fn is_displayable(field_index: usize, value: f64) -> bool {
     }
 
     match field_index {
-        field::T0_BETA | field::T0_SH | field::T1_BETA | field::T1_SH | field::T2_BETA
-        | field::T2_SH => {
-            (value - INVALID_TEMPERATURE_C).abs() > parameters::INVALID_VALUE_EPSILON
-        }
+        field::T0_BETA
+        | field::T0_SH
+        | field::T1_BETA
+        | field::T1_SH
+        | field::T2_BETA
+        | field::T2_SH => (value - INVALID_TEMPERATURE_C).abs() > parameters::INVALID_VALUE_EPSILON,
         field::R0 | field::R1 | field::R2 => {
             (value - INVALID_RESISTANCE_OHM).abs() > parameters::INVALID_VALUE_EPSILON
         }
@@ -247,7 +249,8 @@ mod tests {
 
     use super::*;
 
-    const HEADER: &str = "timestamp,Vtrack,VccEst,BmpC,BmpPa,BmpMslpPa,V0,R0,T0,T0sh,V1,R1,T1,T1sh,V2,R2,T2,T2sh\n";
+    const HEADER: &str =
+        "timestamp,Vtrack,VccEst,BmpC,BmpPa,BmpMslpPa,V0,R0,T0,T0sh,V1,R1,T1,T1sh,V2,R2,T2,T2sh\n";
 
     #[test]
     fn elapsed_time_is_relative_to_each_run() {
